@@ -33,3 +33,17 @@ You give it a URL → it returns metadata:
 The same URL is cached for faster responses.
 
 The app is intentionally simple so the focus stays on **deployment architecture**, not business logic.
+
+### TODOs
+- [x] Monorepo setup (pnpm + turborepo)
+- [] Frontend scaffold (Next.js)
+  - [ ] Add UI pages
+- [] Backend scaffold (NestJS)
+  - [ ] Add backend routes
+- [] Dockerize backend
+- [] Push image to ECR
+- [] Deploy backend to ECS Fargate
+- [] Add CI/CD pipeline
+- [] Enable PR preview environments
+- [] Add Redis caching
+- [] Add Postgres persistence
