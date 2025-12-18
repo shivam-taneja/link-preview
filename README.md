@@ -36,11 +36,11 @@ The app is intentionally simple so the focus stays on **deployment architecture*
 
 ### TODOs
 - [x] Monorepo setup (pnpm + turborepo)
-- [ ] Frontend scaffold (Next.js)
-  - [ ] Add UI pages
-- [ ] Backend scaffold (NestJS)
-  - [ ] Add backend routes
-- [ ] Dockerize backend
+- [x] Frontend scaffold (Next.js)
+  - [x] Add UI pages
+- [x] Backend scaffold (NestJS)
+  - [x] Add backend routes
+- [x] Dockerize backend
 - [ ] Push image to ECR
 - [ ] Deploy backend to ECS Fargate
 - [ ] Add CI/CD pipeline
