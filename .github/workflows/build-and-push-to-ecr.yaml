@@ -1,0 +1,66 @@
+name: Build and Push Images to ECR
+
+on:
+  push:
+    branches: ["staging"]
+
+env:
+  AWS_REGION: ap-south-1
+  BACKEND_REPO: link-preview-staging-backend
+  FRONTEND_REPO: link-preview-staging-frontend
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - apps/api/**
+              - packages/**
+            frontend:
+              - apps/web/**
+              - packages/**
+  
+  build:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::361435626609:role/link-preview-staging-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+      
+      - name: Build & Push Backend
+        if: needs.detect-changes.outputs.backend == 'true' && vars.BUILD_BACKEND == 'true'
+        run: |
+          docker build -f apps/api/Dockerfile \
+            -t $BACKEND_REPO:latest .
+          docker tag $BACKEND_REPO:latest \
+            361435626609.dkr.ecr.${AWS_REGION}.amazonaws.com/$BACKEND_REPO:latest
+          docker push 361435626609.dkr.ecr.${AWS_REGION}.amazonaws.com/$BACKEND_REPO:latest
+
+      - name: Build & Push Frontend
+        if: needs.detect-changes.outputs.frontend == 'true' && vars.BUILD_FRONTEND == 'true'
+        run: |
+          docker build -f apps/web/Dockerfile \
+            -t $FRONTEND_REPO:latest .
+          docker tag $FRONTEND_REPO:latest \
+            361435626609.dkr.ecr.${AWS_REGION}.amazonaws.com/$FRONTEND_REPO:latest
+          docker push 361435626609.dkr.ecr.${AWS_REGION}.amazonaws.com/$FRONTEND_REPO:latest
