@@ -47,3 +47,16 @@ The app is intentionally simple so the focus stays on **deployment architecture*
 - [ ] Enable PR preview environments
 - [ ] Add Redis caching
 - [ ] Add Postgres persistence
+
+### PROGRESS
+- Day 1: Setting up foundation
+  - Setup Turborepo monorepo, Next.js for frontend & Nest.js for backend
+- Day 2: Docker integrated
+  - Basic endpoint added, with simple UI
+  - Added Dockerfile for backend, ran the server from that image
+- Day 3: Docker file on AWS
+  - Setup Github Action to push the image to ECR
+  - Setup AWS roles and policies
+- Day 4: Backend running on ECS, with a twist
+  - Made a cluster, task definition, and a service
+  - Facing issues when adding Application Load Balancer.
