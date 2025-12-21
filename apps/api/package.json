@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "build:image": "docker build --pull --rm -f Dockerfile -t link-preview-api:latest ../../ ",
+    "build:image": "docker build --pull --rm -f ../../apps/api/Dockerfile -t link-preview-api:latest ../../ ",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
